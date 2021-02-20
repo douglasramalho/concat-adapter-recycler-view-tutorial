@@ -7,15 +7,15 @@ import com.example.mergeadapterrecyclerviewtutorial.databinding.ActivityMainBind
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var itemBinding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     private lateinit var programmingLanguagesAdapter: ProgrammingLanguagesAdapter
     private lateinit var tipsAdapter: TipsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        itemBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(itemBinding.root)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initRecyclerView()
     }
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         programmingLanguagesAdapter = ProgrammingLanguagesAdapter()
         tipsAdapter = TipsAdapter()
 
-        itemBinding.recyclerFeed.adapter = ConcatAdapter(tipsAdapter, programmingLanguagesAdapter)
+        binding.recyclerFeed.adapter = ConcatAdapter(tipsAdapter, programmingLanguagesAdapter)
 
         programmingLanguagesAdapter.submitList(programmingLanguages)
         tipsAdapter.submitList(tips)
