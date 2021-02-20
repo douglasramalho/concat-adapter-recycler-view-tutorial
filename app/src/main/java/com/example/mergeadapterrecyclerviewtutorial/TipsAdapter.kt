@@ -9,8 +9,10 @@ import com.example.mergeadapterrecyclerviewtutorial.databinding.ItemTipBinding
 
 class TipsAdapter : ListAdapter<Tip, TipsAdapter.TipViewHolder>(DIFF_CALLBACK) {
 
+    var gotItItemClickListener: (() -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TipViewHolder {
-        return TipViewHolder.create(parent)
+        return TipViewHolder.create(parent, gotItItemClickListener)
     }
 
     override fun onBindViewHolder(holder: TipViewHolder, position: Int) {
@@ -31,20 +33,28 @@ class TipsAdapter : ListAdapter<Tip, TipsAdapter.TipViewHolder>(DIFF_CALLBACK) {
     }
 
     class TipViewHolder(
-        private val itemBinding: ItemTipBinding
+        private val itemBinding: ItemTipBinding,
+        private val gotItItemClickListener: (() -> Unit)?
     ) : RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(tip: Tip) {
             itemBinding.textTip.text = tip.description
+
+            itemBinding.textGotIt.setOnClickListener {
+                gotItItemClickListener?.invoke()
+            }
         }
 
         companion object {
-            fun create(parent: ViewGroup): TipViewHolder {
+            fun create(
+                parent: ViewGroup,
+                gotItItemClickListener: (() -> Unit)?
+            ): TipViewHolder {
                 val itemBinding = ItemTipBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
 
-                return TipViewHolder(itemBinding)
+                return TipViewHolder(itemBinding, gotItItemClickListener)
             }
         }
     }

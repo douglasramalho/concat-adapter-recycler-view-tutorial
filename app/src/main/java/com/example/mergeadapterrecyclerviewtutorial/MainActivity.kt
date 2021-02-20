@@ -22,11 +22,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         programmingLanguagesAdapter = ProgrammingLanguagesAdapter()
-        tipsAdapter = TipsAdapter()
+        tipsAdapter = TipsAdapter().apply {
+            gotItItemClickListener = {
+                onDismissTips()
+            }
+        }
 
         binding.recyclerFeed.adapter = ConcatAdapter(tipsAdapter, programmingLanguagesAdapter)
 
         programmingLanguagesAdapter.submitList(programmingLanguages)
         tipsAdapter.submitList(tips)
+    }
+
+    private fun onDismissTips() {
+        tipsAdapter.notifyItemRemoved(0)
     }
 }
